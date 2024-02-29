@@ -23,7 +23,8 @@
             <div class = "card">
                 <img class = "card-img-top" src="{{ movie.images.url }}"/>
                 <div class = "card-body">
-                    <h5 class = "card-title fw-bold"> {{ movie.title }}</h5>
+                    <h5 class = "card-title fw-bold"> {{ movie.title}} ({{movie.year}})</h5>
+                    <h5 class = "card-text"> {{ movie.genre }}</h5>
                     <p class = "card-text"> {{ movie.description }}</p>
                     {% if movie.url %}
                         <a href="{{ movie.url }}" class = "btn btn-primary">
