@@ -31,6 +31,7 @@ def statistics_view(request):
     
     # Crear un diccionario para almacenar la cantidad de películas por año 
     movie_counts_by_year = {} 
+    movie_counts_by_genre = {} 
     
     # Filtrar las películas por año y contar la cantidad de películas por año 
     for movie in all_movies: 
@@ -39,6 +40,13 @@ def statistics_view(request):
             movie_counts_by_year[year] += 1 
         else: 
             movie_counts_by_year[year] = 1  
+        
+        gen = movie.genre.split(",")
+        genre = gen[0] if gen[0] else "None" 
+        if genre in movie_counts_by_genre: 
+            movie_counts_by_genre[genre] += 1 
+        else: 
+            movie_counts_by_genre[genre] = 1    
         
     # Ancho de las barras 
     bar_width = 0.5 
@@ -68,31 +76,7 @@ def statistics_view(request):
     buffer.close() 
     graphic = base64.b64encode(image_png) 
     graphic = graphic.decode('utf-8') 
-    
-    # Renderizar la plantilla 
-    # statistics.html con la gráfica 
-    return render(request, 'statistics.html', {'graphic': graphic})
 
-
-
-def statistics_genre(request): 
-    matplotlib.use('Agg') 
-    # Obtener todas las películas 
-    all_movies = Movie.objects.all() 
-    
-    # Crear un diccionario para almacenar la cantidad de películas por año 
-    movie_counts_by_genre = {} 
-    
-    # Filtrar las películas por año y contar la cantidad de películas por año 
-    for movie in all_movies: 
-        gen = movie.genre.split(",")
-        genre = gen[0] if gen[0] else "None" 
-        if genre in movie_counts_by_genre: 
-            movie_counts_by_genre[genre] += 1 
-        else: 
-            movie_counts_by_genre[genre] = 1  
-        
-    # Ancho de las barras 
     bar_width = 0.5 
     # Posiciones de las barras 
     bar_positions = range(len(movie_counts_by_genre)) 
@@ -123,4 +107,4 @@ def statistics_genre(request):
     
     # Renderizar la plantilla 
     # statistics.html con la gráfica 
-    return render(request, 'statistics.html', {'graphicG': graphicG})
+    return render(request, 'statistics.html', {'graphic': graphic, 'graphicG': graphicG})
