@@ -2,3 +2,7 @@ django
 pillow
 pandas
 matploplib
+openai
+python-dotenv
+numpy
+requests
