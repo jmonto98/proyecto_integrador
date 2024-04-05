@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         ##Código para leer los embeddings del archivo movie_descriptions_embeddings.json
-        json_file_path = '../movie_descriptions_embeddings.json'
+        json_file_path = './movie_descriptions_embeddings.json'
         # Load data from the JSON file
         with open(json_file_path, 'r') as file:
             movies = json.load(file)       

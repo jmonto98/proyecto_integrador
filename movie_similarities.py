@@ -32,6 +32,7 @@ print(emb)
 
 
 for i in range(len(movies)):
+#for i in range(6):
   emb = get_embedding(movies[i]['description'])
   movies[i]['embedding'] = emb
 

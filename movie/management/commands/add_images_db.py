@@ -27,7 +27,8 @@ class Command(BaseCommand):
     help = 'Add images to the database'
 
     def handle(self, *args, **kwargs):
-        items = Movie.objects.all()
+        items = Movie.objects.all()[:5]
+        #items = Movie.objects.all()
         for item in items:
             response = client.images.generate(
                 model="dall-e-2",
@@ -39,7 +40,7 @@ class Command(BaseCommand):
             image_url = response['data'][0].url
             img = fetch_image(image_url)
             img.save(f'media/movie/images/{item.title}.jpg')           
-            item.image = f'movie/images/{item.title}.jpg'   
+            item.images = f'movie/images/{item.title}.jpg'   
             item.save()
         self.stdout.write(self.style.SUCCESS(f'Successfully updated items'))
         
