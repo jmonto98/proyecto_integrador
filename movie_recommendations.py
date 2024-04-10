@@ -25,18 +25,26 @@ def get_embedding(text, model="text-embedding-3-small"):
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
+def recommendation(text):
+    emb = get_embedding(text)
+    sim = []
+    for i in range(len(movies)):
+        sim.append(cosine_similarity(emb,movies[i]['embedding']))
+    sim = np.array(sim)
+    idx = np.argmax(sim)
+    return(movies[idx]['title'])
+    
 #Si se tuviera un prompt por ejemplo: Película de la segunda guerra mundial, podríamos generar el embedding del prompt y comparar contra 
 #los embeddings de cada una de las películas de la base de datos. La película con la similitud más alta al prompt sería la película
 #recomendada.
 
-req = "película sobre la  bomba atómica"
+req = "avengers"
 emb = get_embedding(req)
 
 sim = []
 for i in range(len(movies)):
-  sim.append(cosine_similarity(emb,movies[i]['embedding']))
+    sim.append(cosine_similarity(emb,movies[i]['embedding']))
 sim = np.array(sim)
 idx = np.argmax(sim)
-print(movies[idx]['title'])
-
+print(movies[idx]['title']+": "+ movies[idx]['description'])
 

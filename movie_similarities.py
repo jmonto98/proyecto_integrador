@@ -25,7 +25,7 @@ def get_embedding(text, model="text-embedding-3-small"):
 def cosine_similarity(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
 
-emb = get_embedding(movies[1]['description'])
+emb = get_embedding(movies[7]['description'])
 print(emb)
 
 #Vamos a crear una nueva llave con el embedding de la descripción de cada película en el archivo .json
@@ -61,7 +61,7 @@ print(f"Similitud entre película {movies[20]['title']} y {movies[3]['title']}: 
 #los embeddings de cada una de las películas de la base de datos. La película con la similitud más alta al prompt sería la película
 #recomendada.
 
-req = "película de la segunda guerra mundial"
+req = "super heroes"
 emb = get_embedding(req)
 
 sim = []

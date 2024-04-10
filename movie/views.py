@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-
+from  movie_recommendations import *
 from .models import Movie
 import matplotlib.pyplot as plt 
 import matplotlib 
@@ -27,6 +27,13 @@ def singup(request):
     email = request.GET.get('email')
     return render(request, 'singup.html', {'email':email})
     
+def recommendations(request):
+    searchTerm = request.GET.get('searchMovie')
+    if searchTerm:
+        title = recommendation(searchTerm)
+        movies = Movie.objects.filter(title__icontains=title)
+        return render(request, 'recommendations.html',{'searchText':searchTerm, 'movies':movies})
+    return render(request, 'recommendations.html')
 
 def statistics_view(request): 
     matplotlib.use('Agg') 
